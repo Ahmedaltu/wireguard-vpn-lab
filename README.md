@@ -10,7 +10,7 @@ A lightweight, self-hosted VPN built with WireGuard on Oracle Cloud Free Tier (F
 ┌─────────────────────────────────────────────────────────────────┐
 │                        WITHOUT VPN                              │
 │                                                                 │
-│   Your Laptop ──────────► Finnish ISP ──────────► Internet     │
+│   Your Laptop ──────────► Finnish ISP ──────────► Internet      │
 │   (real IP visible)       (sees all traffic)                    │
 └─────────────────────────────────────────────────────────────────┘
 
@@ -20,7 +20,7 @@ A lightweight, self-hosted VPN built with WireGuard on Oracle Cloud Free Tier (F
 │   Your Laptop                                                   │
 │   10.8.0.2/32                                                   │
 │       │                                                         │
-│       │  ChaCha20 + Poly1305 Encryption                        │
+│       │  ChaCha20 + Poly1305 Encryption                         │
 │       │  UDP Port 51820                                         │
 │       ▼                                                         │
 │   ╔═══════════════════════════════╗                             │
@@ -29,10 +29,10 @@ A lightweight, self-hosted VPN built with WireGuard on Oracle Cloud Free Tier (F
 │   ╚═══════════════════════════════╝                             │
 │       │                                                         │
 │       ▼                                                         │
-│   Oracle Cloud VM — Frankfurt 🇩🇪                               │
+│   Oracle Cloud VM — Frankfurt 🇩🇪                                │
 │   10.8.0.1/24  │  130.61.115.156                                │
 │       │        │                                                │
-│       │   iptables NAT + MASQUERADE                            │
+│       │   iptables NAT + MASQUERADE                             │
 │       │   IP Forwarding                                         │
 │       ▼                                                         │
 │   Internet                                                      │
@@ -303,7 +303,7 @@ After connecting, run all four tests:
 │  WireGuard Interface wg0                                             │
 │  ├── IP Address:     10.8.0.2/32                                     │
 │  ├── DNS:            1.1.1.1 (Cloudflare)                            │
-│  └── AllowedIPs:     0.0.0.0/0 (all traffic)                        │
+│  └── AllowedIPs:     0.0.0.0/0 (all traffic)                         │
 └──────────────────────┬───────────────────────────────────────────────┘
                        │
                        │  UDP/51820
@@ -319,11 +319,11 @@ After connecting, run all four tests:
 │  └── Peer:           10.8.0.2/32                                     │
 │                                                                      │
 │  iptables Rules                                                      │
-│  ├── FORWARD:        wg0 → enp0s6 ACCEPT                            │
-│  ├── FORWARD:        enp0s6 → wg0 ESTABLISHED,RELATED ACCEPT        │
-│  └── NAT POSTROUTING: enp0s6 MASQUERADE                             │
+│  ├── FORWARD:        wg0 → enp0s6 ACCEPT                             │
+│  ├── FORWARD:        enp0s6 → wg0 ESTABLISHED,RELATED ACCEPT         │
+│  └── NAT POSTROUTING: enp0s6 MASQUERADE                              │
 │                                                                      │
-│  IP Forwarding:      net.ipv4.ip_forward = 1                        │
+│  IP Forwarding:      net.ipv4.ip_forward = 1                         │
 └──────────────────────┬───────────────────────────────────────────────┘
                        │
                        │  enp0s6 (public interface)
@@ -413,14 +413,6 @@ sudo journalctl -u wg-quick@wg0 -f
 - `AllowedIPs = 0.0.0.0/0` routes ALL traffic through VPN (full tunnel)
 - WireGuard uses perfect forward secrecy — session keys rotate automatically
 - No logs are kept on the server
-
----
-
-## Related Projects
-
-- [ubuntu-cloud-lab](https://github.com/Ahmedaltu/ubuntu-cloud-lab)
-- [metal3-kubernetes-lab](https://github.com/Ahmedaltu/metal3-kubernetes-lab)
-- [istio-service-mesh-lab](https://github.com/Ahmedaltu/istio-service-mesh-lab)
 
 ---
 
